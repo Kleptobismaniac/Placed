@@ -1,7 +1,6 @@
 package klepto.placed.handlers;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public interface ItemHandler{

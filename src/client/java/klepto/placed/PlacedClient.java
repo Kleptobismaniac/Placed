@@ -6,8 +6,8 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.render.ColorProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 
+@SuppressWarnings("deprecation")
 public class PlacedClient implements ClientModInitializer {
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onInitializeClient() {
 		BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.GLOWSTONE_WIRE, RenderLayer.getCutout());

@@ -1,45 +1,25 @@
 package klepto.placed.handlers.wire_util;
 
 
-import net.minecraft.block.AbstractBlock.Settings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.ObserverBlock;
-import net.minecraft.block.RepeaterBlock;
 import net.minecraft.block.ShapeContext;
-import net.minecraft.block.TntBlock;
 import net.minecraft.block.enums.WireConnection;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.particle.DustParticleEffect;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.state.property.Property;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Util;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -49,16 +29,11 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
 import klepto.placed.registry.block.ModBlocks;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 public class WireHandler extends Block{
@@ -113,6 +88,7 @@ public class WireHandler extends Block{
 			.with(WEST, WireConnection.SIDE);
     }
 
+    @SuppressWarnings("incomplete-switch")
     private VoxelShape getShapeForState(BlockState state) {
         VoxelShape voxelShape = DOT_SHAPE;
         for (Direction direction : Direction.Type.HORIZONTAL) {
@@ -226,7 +202,6 @@ public class WireHandler extends Block{
     private void addParticles(World world, Random random, BlockPos pos, Vector3f color, Direction direction, Direction direction2, float f, float g) {
 		float h = g - f;
 		if (!(random.nextFloat() >= 0.2F * h)) {
-			float i = 0.4375F;
 			float j = f + h * random.nextFloat();
 			double d = 0.5 + (double)(0.4375F * (float)direction.getOffsetX()) + (double)(j * (float)direction2.getOffsetX());
 			double e = 0.5 + (double)(0.4375F * (float)direction.getOffsetY()) + (double)(j * (float)direction2.getOffsetY());
@@ -394,7 +369,8 @@ public class WireHandler extends Block{
 		}
 	}
 
-	private void updateForNewState(World world, BlockPos pos, BlockState oldState, BlockState newState) {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+    private void updateForNewState(World world, BlockPos pos, BlockState oldState, BlockState newState) {
 		for (Direction direction : Direction.Type.HORIZONTAL) {
 			BlockPos blockPos = pos.offset(direction);
 			if (((WireConnection)oldState.get((Property)DIRECTION_TO_WIRE_CONNECTION_PROPERTY.get(direction))).isConnected()
@@ -438,6 +414,7 @@ public class WireHandler extends Block{
         };
     }
 
+    /* 
     private Direction wireToDirection(EnumProperty<WireConnection> wire) {
         if (wire == NORTH)
             return Direction.NORTH;
@@ -449,5 +426,5 @@ public class WireHandler extends Block{
             return Direction.WEST;
         return null;
     }
-
+    */
 }
