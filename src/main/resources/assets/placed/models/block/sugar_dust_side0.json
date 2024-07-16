@@ -1,0 +1,6 @@
+{
+    "parent": "placed:block/glowstone_dust_side",
+    "textures": {
+        "line": "placed:block/glowstone_dust_line0"
+    }
+}
